@@ -4,6 +4,7 @@ import cors from "cors";
 import { DataSource } from "typeorm";
 
 import { schema } from "./Schema";
+import { Users } from "./Entities/Users";
 
 const main = async () => {
   let dataSource = new DataSource({
@@ -12,8 +13,8 @@ const main = async () => {
     username: "root",
     password: "123321",
     logging: true,
-    synchronize: true,
-    entities: [],
+    synchronize: false,
+    entities: [Users],
   });
 
   let connection = await dataSource.initialize();
