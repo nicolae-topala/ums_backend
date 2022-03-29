@@ -5,7 +5,6 @@ export interface IUser {
   id_student: number;
   username: string;
   password: string;
-  newPassword?: string;
   email: string;
 }
 
