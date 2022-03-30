@@ -1,23 +1,13 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import cors from "cors";
-import { DataSource } from "typeorm";
 
+import connect from "./utils/connect";
+import logger from "./utils/logger";
 import { schema } from "./Schema";
-import { Users } from "./Entities/Users";
 
 const main = async () => {
-  let dataSource = new DataSource({
-    type: "mysql",
-    database: "ums_db",
-    username: "root",
-    password: "123321",
-    logging: true,
-    synchronize: false,
-    entities: [Users],
-  });
-
-  let connection = await dataSource.initialize();
+  await connect();
 
   const app = express();
   app.use(cors());
@@ -31,10 +21,10 @@ const main = async () => {
   );
 
   app.listen(3001, () => {
-    console.log("Server running on port 3001");
+    logger.info("Server running on port 3001");
   });
 };
 
 main().catch((err) => {
-  console.log(err);
+  logger.error(err);
 });
