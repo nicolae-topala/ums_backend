@@ -1,3 +1,4 @@
+import { Students } from "../src/Entities/Student.entity";
 import { Users } from "../src/Entities/Users.entity";
 
 export default {
@@ -6,5 +7,5 @@ export default {
   password: "123321",
   logging: true,
   synchronize: false,
-  entities: [Users],
+  entities: [Users, Students],
 };

@@ -1,8 +1,16 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
+import { Students } from "./Student.entity";
 
 export interface IUser {
   id: number;
-  id_student: number;
   username: string;
   password: string;
   email: string;
@@ -14,9 +22,6 @@ export class Users extends BaseEntity {
   id!: number;
 
   @Column()
-  id_student!: number;
-
-  @Column()
   username!: string;
 
   @Column()
@@ -24,4 +29,11 @@ export class Users extends BaseEntity {
 
   @Column()
   email!: string;
+
+  @Column()
+  student_id!: number;
+
+  @OneToOne(() => Students)
+  @JoinColumn()
+  student!: Students;
 }
