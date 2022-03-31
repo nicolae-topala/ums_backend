@@ -1,3 +1,4 @@
+import { Discounts } from "../src/Entities/Discounts.entity";
 import { Faculties } from "../src/Entities/Faculties.entity";
 import { Professors } from "../src/Entities/Professors.entity";
 import { Students } from "../src/Entities/Students.entity";
@@ -10,5 +11,5 @@ export default {
   password: "123321",
   logging: true,
   synchronize: true,
-  entities: [Users, Students, Faculties, Study_Fields, Professors],
+  entities: [Users, Students, Faculties, Study_Fields, Professors, Discounts],
 };
