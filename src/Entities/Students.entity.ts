@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Study_Fields } from "./Study_Fields.entity";
 
 @Entity()
 export class Students extends BaseEntity {
@@ -97,4 +105,10 @@ export class Students extends BaseEntity {
 
   @Column()
   academicYear!: string;
+
+  @ManyToOne(() => Study_Fields, (Study_Fields) => Study_Fields.students, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn()
+  studyField!: Study_Fields;
 }

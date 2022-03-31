@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Study_Fields } from "./Study_Fields.entity";
 
 @Entity()
 export class Faculties extends BaseEntity {
@@ -10,4 +17,7 @@ export class Faculties extends BaseEntity {
 
   @Column()
   code!: string;
+
+  @OneToMany(() => Study_Fields, (Study_Fields) => Study_Fields.faculty)
+  studyFields!: Study_Fields[];
 }

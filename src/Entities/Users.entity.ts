@@ -30,10 +30,7 @@ export class Users extends BaseEntity {
   @Column()
   email!: string;
 
-  @Column()
-  student_id!: number;
-
-  @OneToOne(() => Students)
+  @OneToOne(() => Students, { onDelete: "CASCADE" })
   @JoinColumn()
   student!: Students;
 }
