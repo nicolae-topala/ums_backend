@@ -1,8 +1,9 @@
 import { GraphQLID, GraphQLInt, GraphQLString } from "graphql";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 import { UserType } from "../TypeDefs/User";
 import { MessageType } from "../TypeDefs/Message";
-import { Users, IUser } from "../../Models/Users";
+import { Users, IUser } from "../../Entities/Users.entity";
 
 export const CREATE_USER = {
   type: MessageType,

@@ -1,7 +1,6 @@
 import { DataSource } from "typeorm";
 import config from "config";
 
-import { Users } from "../Models/Users";
 import logger from "./logger";
 
 async function connect() {

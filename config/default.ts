@@ -1,4 +1,4 @@
-import { Users } from "../src/Models/Users";
+import { Users } from "../src/Entities/Users.entity";
 
 export default {
   database: "ums_db",

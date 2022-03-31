@@ -1,7 +1,7 @@
 import { GraphQLList } from "graphql";
 
 import { UserType } from "../TypeDefs/User";
-import { Users, IUser } from "../../Models/Users";
+import { Users, IUser } from "../../Entities/Users.entity";
 
 export const GET_ALL_USERS = {
   type: new GraphQLList(UserType),
