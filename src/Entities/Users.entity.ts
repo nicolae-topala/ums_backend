@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { Students } from "./Student.entity";
+import { Students } from "./Students.entity";
 
 export interface IUser {
   id: number;
