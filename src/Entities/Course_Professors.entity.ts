@@ -4,6 +4,7 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Courses } from "./Courses.entity";
 import { Professors } from "./Professors.entity";
@@ -16,9 +17,17 @@ export class Course_Professors extends BaseEntity {
   @Column()
   officeNumber!: string;
 
-  @ManyToOne(() => Courses, (Courses) => Courses.courseProfessors)
+  @ManyToOne(() => Courses, (Courses: Courses) => Courses.courseProfessors, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn()
   course!: Courses;
 
-  @ManyToOne(() => Professors, (Professors) => Professors.courseProfessors)
+  @ManyToOne(
+    () => Professors,
+    (Professors: Professors) => Professors.courseProfessors,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn()
   professor!: Professors;
 }

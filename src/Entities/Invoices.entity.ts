@@ -2,7 +2,6 @@ import {
   BaseEntity,
   Column,
   Entity,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -31,6 +30,6 @@ export class Invoices extends BaseEntity {
   @Column()
   ammount!: number;
 
-  @OneToOne(() => Payments, (Payments) => Payments.invoice)
+  @OneToOne(() => Payments, (Payments: Payments) => Payments.invoice)
   payments!: Payments;
 }

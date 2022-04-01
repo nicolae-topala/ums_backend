@@ -19,9 +19,12 @@ export class Faculties extends BaseEntity {
   @Column()
   code!: string;
 
-  @OneToMany(() => Study_Fields, (Study_Fields) => Study_Fields.faculty)
+  @OneToMany(
+    () => Study_Fields,
+    (Study_Fields: Study_Fields) => Study_Fields.faculty
+  )
   studyFields!: Study_Fields[];
 
-  @OneToMany(() => Professors, (Professors) => Professors.faculty)
+  @OneToMany(() => Professors, (Professors: Professors) => Professors.faculty)
   professors!: Professors[];
 }

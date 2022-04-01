@@ -26,25 +26,25 @@ export class Payments extends BaseEntity {
   @Column()
   status!: string;
 
-  @ManyToOne(() => Discounts, (Discounts) => Discounts.payments, {
+  @ManyToOne(() => Discounts, (Discounts: Discounts) => Discounts.payments, {
     onDelete: "SET NULL",
   })
   @JoinColumn()
   discount!: Discounts;
 
-  @OneToOne(() => Invoices, (Invoices) => Invoices.payments, {
+  @OneToOne(() => Invoices, (Invoices: Invoices) => Invoices.payments, {
     onDelete: "CASCADE",
   })
   @JoinColumn()
   invoice!: Discounts;
 
-  @ManyToOne(() => Courses, (Courses) => Courses.payments, {
+  @ManyToOne(() => Courses, (Courses: Courses) => Courses.payments, {
     onDelete: "SET NULL",
   })
   @JoinColumn()
   course!: Courses;
 
-  @ManyToOne(() => Students, (Students) => Students.payments, {
+  @ManyToOne(() => Students, (Students: Students) => Students.payments, {
     onDelete: "SET NULL",
   })
   @JoinColumn()

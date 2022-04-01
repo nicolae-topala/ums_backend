@@ -4,6 +4,7 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Courses } from "./Courses.entity";
 import { Students } from "./Students.entity";
@@ -16,9 +17,15 @@ export class Student_Courses extends BaseEntity {
   @Column()
   final_grade!: number;
 
-  @ManyToOne(() => Students, (Students) => Students.studentCourses)
+  @ManyToOne(() => Students, (Students: Students) => Students.studentCourses, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn()
   student!: Students;
 
-  @ManyToOne(() => Courses, (Courses) => Courses.studentCourses)
+  @ManyToOne(() => Courses, (Courses: Courses) => Courses.studentCourses, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn()
   course!: Courses;
 }

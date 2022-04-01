@@ -34,15 +34,15 @@ export class Study_Fields extends BaseEntity {
   @Column()
   semestersNumber!: string;
 
-  @ManyToOne(() => Faculties, (Faculties) => Faculties.studyFields, {
+  @ManyToOne(() => Faculties, (Faculties: Faculties) => Faculties.studyFields, {
     onDelete: "SET NULL",
   })
   @JoinColumn()
   faculty!: Faculties;
 
-  @OneToMany(() => Students, (Students) => Students.studyField)
+  @OneToMany(() => Students, (Students: Students) => Students.studyField)
   students!: Students[];
 
-  @OneToMany(() => Courses, (Courses) => Courses.studyField)
+  @OneToMany(() => Courses, (Courses: Courses) => Courses.studyField)
   courses!: Courses[];
 }

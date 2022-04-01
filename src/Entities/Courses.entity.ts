@@ -33,21 +33,28 @@ export class Courses extends BaseEntity {
   @Column()
   grading_system!: string;
 
-  @ManyToOne(() => Study_Fields, (Study_Fields) => Study_Fields.courses, {
-    onDelete: "SET NULL",
-  })
+  @ManyToOne(
+    () => Study_Fields,
+    (Study_Fields: Study_Fields) => Study_Fields.courses,
+    {
+      onDelete: "SET NULL",
+    }
+  )
   @JoinColumn()
   studyField!: Faculties;
 
-  @OneToMany(() => Payments, (Payments) => Payments.course)
+  @OneToMany(() => Payments, (Payments: Payments) => Payments.course)
   payments!: Payments[];
 
-  @OneToMany(() => Student_Courses, (Student_Courses) => Student_Courses.course)
+  @OneToMany(
+    () => Student_Courses,
+    (Student_Courses: Student_Courses) => Student_Courses.course
+  )
   studentCourses!: Student_Courses[];
 
   @OneToMany(
     () => Course_Professors,
-    (Course_Professors) => Course_Professors.course
+    (Course_Professors: Course_Professors) => Course_Professors.course
   )
   courseProfessors!: Course_Professors[];
 }

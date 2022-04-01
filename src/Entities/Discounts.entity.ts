@@ -3,7 +3,6 @@ import {
   Column,
   Entity,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Payments } from "./Payments.entity";
@@ -28,6 +27,6 @@ export class Discounts extends BaseEntity {
   @Column()
   status!: string;
 
-  @OneToMany(() => Payments, (Payments) => Payments.discount)
+  @OneToMany(() => Payments, (Payments: Payments) => Payments.discount)
   payments!: Payments[];
 }

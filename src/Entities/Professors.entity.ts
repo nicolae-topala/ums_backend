@@ -30,7 +30,7 @@ export class Professors extends BaseEntity {
   @Column()
   email!: string;
 
-  @ManyToOne(() => Faculties, (Faculties) => Faculties.professors, {
+  @ManyToOne(() => Faculties, (Faculties: Faculties) => Faculties.professors, {
     onDelete: "SET NULL",
   })
   @JoinColumn()
@@ -38,7 +38,7 @@ export class Professors extends BaseEntity {
 
   @OneToMany(
     () => Course_Professors,
-    (Course_Professors) => Course_Professors.course
+    (Course_Professors: Course_Professors) => Course_Professors.course
   )
   courseProfessors!: Course_Professors[];
 }

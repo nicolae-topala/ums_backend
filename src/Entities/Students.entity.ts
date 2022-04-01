@@ -109,18 +109,22 @@ export class Students extends BaseEntity {
   @Column()
   academicYear!: string;
 
-  @ManyToOne(() => Study_Fields, (Study_Fields) => Study_Fields.students, {
-    onDelete: "SET NULL",
-  })
+  @ManyToOne(
+    () => Study_Fields,
+    (Study_Fields: Study_Fields) => Study_Fields.students,
+    {
+      onDelete: "SET NULL",
+    }
+  )
   @JoinColumn()
   studyField!: Study_Fields;
 
-  @OneToMany(() => Payments, (Payments) => Payments.student)
+  @OneToMany(() => Payments, (Payments: Payments) => Payments.student)
   payments!: Payments[];
 
   @OneToMany(
     () => Student_Courses,
-    (Student_Courses) => Student_Courses.student
+    (Student_Courses: Student_Courses) => Student_Courses.student
   )
   studentCourses!: Student_Courses[];
 }
