@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Course_Professors } from "./Course_Professors.entity";
 import { Faculties } from "./Faculties.entity";
 
 @Entity()
@@ -34,4 +35,10 @@ export class Professors extends BaseEntity {
   })
   @JoinColumn()
   faculty!: Faculties;
+
+  @OneToMany(
+    () => Course_Professors,
+    (Course_Professors) => Course_Professors.course
+  )
+  courseProfessors!: Course_Professors[];
 }
