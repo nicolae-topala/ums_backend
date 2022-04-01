@@ -22,20 +22,21 @@ export class Study_Fields extends BaseEntity {
   @Column()
   code!: string;
 
-  @Column()
+  @Column({ nullable: true })
   type!: string;
 
-  @Column()
+  @Column({ nullable: true })
   ects!: number;
 
-  @Column()
-  yearsNumber!: string;
+  @Column({ nullable: true })
+  yearsNumber!: number;
 
-  @Column()
-  semestersNumber!: string;
+  @Column({ nullable: true })
+  semestersNumber!: number;
 
   @ManyToOne(() => Faculties, (Faculties: Faculties) => Faculties.studyFields, {
-    onDelete: "SET NULL",
+    onDelete: "RESTRICT",
+    nullable: false,
   })
   @JoinColumn()
   faculty!: Faculties;

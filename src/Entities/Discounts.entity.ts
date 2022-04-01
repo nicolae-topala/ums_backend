@@ -12,19 +12,19 @@ export class Discounts extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: "date" })
+  @Column({ type: "date", nullable: true })
   date!: Date;
 
-  @Column()
+  @Column({ nullable: true })
   taxType!: string;
 
   @Column({ type: "float" })
-  discountsAmmount!: number;
+  discountAmmount!: number;
 
-  @Column()
+  @Column({ nullable: true })
   details!: string;
 
-  @Column()
+  @Column({ nullable: true })
   status!: string;
 
   @OneToMany(() => Payments, (Payments: Payments) => Payments.discount)

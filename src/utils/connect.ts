@@ -1,21 +1,13 @@
-import { DataSource } from "typeorm";
 import config from "config";
 
+import myDataSource from "./dataSource";
 import logger from "./logger";
 
 async function connect() {
   try {
-    let dataSource = new DataSource({
-      type: "mysql",
-      database: config.get<string>("database"),
-      username: config.get<string>("username"),
-      password: config.get<string>("password"),
-      logging: config.get<boolean>("logging"),
-      synchronize: config.get<boolean>("synchronize"),
-      entities: config.get("entities"),
+    await myDataSource.initialize().then(async (connection) => {
+      await connection.runMigrations();
     });
-
-    let connection = await dataSource.initialize();
 
     logger.info("Connected to DB !");
   } catch (e) {

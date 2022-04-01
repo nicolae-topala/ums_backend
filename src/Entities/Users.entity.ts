@@ -27,10 +27,16 @@ export class Users extends BaseEntity {
   @Column()
   password!: string;
 
-  @Column()
+  @Column({ unique: true })
   email!: string;
 
-  @OneToOne(() => Students, { onDelete: "CASCADE" })
+  @Column({ nullable: true })
+  status!: string;
+
+  @Column({ type: "timestamp", nullable: true })
+  createdAt!: Date;
+
+  @OneToOne(() => Students, { onDelete: "CASCADE", nullable: false })
   @JoinColumn()
   student!: Students;
 }

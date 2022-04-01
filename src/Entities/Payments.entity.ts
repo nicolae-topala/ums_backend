@@ -19,10 +19,10 @@ export class Payments extends BaseEntity {
   @Column({ type: "float" })
   ammountPaid!: number;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   penalty!: number;
 
-  @Column()
+  @Column({ nullable: true })
   status!: string;
 
   @ManyToOne(() => Discounts, (Discounts: Discounts) => Discounts.payments, {
@@ -32,10 +32,11 @@ export class Payments extends BaseEntity {
   discount!: Discounts;
 
   @ManyToOne(() => Invoices, (Invoices: Invoices) => Invoices.payments, {
-    onDelete: "SET NULL",
+    onDelete: "RESTRICT",
+    nullable: false,
   })
   @JoinColumn()
-  invoice!: Discounts;
+  invoice!: Invoices;
 
   @ManyToOne(() => Courses, (Courses: Courses) => Courses.payments, {
     onDelete: "SET NULL",

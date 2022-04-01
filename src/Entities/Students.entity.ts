@@ -23,97 +23,95 @@ export class Students extends BaseEntity {
   lastName!: string;
 
   @Column({ type: "date" })
-  birtdate!: Date;
+  birthdate!: Date;
 
   @Column()
   cnp!: string;
 
-  @Column()
+  @Column({ nullable: true })
   firstNameMother!: string;
 
-  @Column()
+  @Column({ nullable: true })
   firstNameFather!: string;
 
-  @Column()
+  @Column({ nullable: true })
   passport!: string;
 
-  @Column()
+  @Column({ nullable: true })
   idCard!: string;
 
-  @Column()
+  @Column({ nullable: true })
   sex!: string;
 
-  @Column()
+  @Column({ nullable: true })
   citizenship!: string;
 
-  @Column()
+  @Column({ nullable: true })
   nationality!: string;
 
-  @Column()
+  @Column({ nullable: true })
   countryBirth!: string;
 
-  @Column()
+  @Column({ nullable: true })
   cityBirth!: string;
 
-  @Column()
+  @Column({ nullable: true })
   countyBirth!: string;
 
-  @Column()
+  @Column({ nullable: true })
   countryResidence!: string;
 
-  @Column()
+  @Column({ nullable: true })
   cityResidence!: string;
 
-  @Column()
+  @Column({ nullable: true })
   countyResidence!: string;
 
-  @Column()
+  @Column({ nullable: true })
   religion!: string;
 
-  @Column()
+  @Column({ nullable: true })
   minority!: boolean;
 
-  @Column()
-  maritalSatus!: string;
+  @Column({ nullable: true })
+  maritalStatus!: string;
 
-  @Column()
-  militarySituation!: string;
+  @Column({ nullable: true })
+  militarySituation!: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   militaryBooklet!: string;
 
-  @Column({ type: "year" })
+  @Column({ type: "year", nullable: true })
   highschoolGraduation!: Date;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   highschoolBaccalaureate!: number;
 
-  @Column()
+  @Column({ nullable: true })
   highschoolOlympic!: boolean;
 
-  @Column()
-  studyType!: string;
-
-  @Column()
+  @Column({ nullable: true })
   group!: string;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   admissionGrade!: number;
 
-  @Column()
+  @Column({ nullable: true })
   phone!: string;
 
-  @Column()
+  @Column({ nullable: true })
   email!: string;
 
-  @Column()
+  @Column({ nullable: true })
   academicYear!: string;
 
   @ManyToOne(
     () => Study_Fields,
     (Study_Fields: Study_Fields) => Study_Fields.students,
     {
-      onDelete: "SET NULL",
+      onDelete: "RESTRICT",
+      nullable: false,
     }
   )
   @JoinColumn()

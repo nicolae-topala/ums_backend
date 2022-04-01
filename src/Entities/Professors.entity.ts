@@ -21,7 +21,7 @@ export class Professors extends BaseEntity {
   @Column()
   lastName!: string;
 
-  @Column({ type: "date" })
+  @Column({ type: "date", nullable: true })
   birthdate!: Date;
 
   @Column()
@@ -32,6 +32,7 @@ export class Professors extends BaseEntity {
 
   @ManyToOne(() => Faculties, (Faculties: Faculties) => Faculties.professors, {
     onDelete: "SET NULL",
+    nullable: true,
   })
   @JoinColumn()
   faculty!: Faculties;

@@ -18,26 +18,42 @@ export class Courses extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ length: 10 })
   code!: string;
 
   @Column()
   name!: string;
 
-  @Column()
+  @Column({ nullable: true })
   type!: string;
 
-  @Column()
+  @Column({ nullable: true })
   category!: string;
 
-  @Column()
+  @Column({ nullable: true })
   gradingSystem!: string;
+
+  @Column({ nullable: true })
+  semesterNumber!: number;
+
+  @Column({ nullable: true })
+  weeksNumber!: number;
+
+  @Column({ nullable: true })
+  ects!: number;
+
+  @Column({ nullable: true })
+  examinationForm!: string;
+
+  @Column({ nullable: true })
+  minimumGrade!: number;
 
   @ManyToOne(
     () => Study_Fields,
     (Study_Fields: Study_Fields) => Study_Fields.courses,
     {
       onDelete: "SET NULL",
+      nullable: true,
     }
   )
   @JoinColumn()

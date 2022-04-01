@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./dist/index.ts",
+    "generate": "ts-node ./node_modules/typeorm/cli.js migration:generate ./src/Migrations/migrationName -d src/utils/dataSource.ts -p",
     "dev": "nodemon ./src/index.ts",
     "build": "tsc -p ."
   },

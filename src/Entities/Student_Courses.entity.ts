@@ -14,11 +14,12 @@ export class Student_Courses extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   finalGrade!: number;
 
   @ManyToOne(() => Students, (Students: Students) => Students.studentCourses, {
     onDelete: "CASCADE",
+    nullable: false,
   })
   @JoinColumn()
   student!: Students;

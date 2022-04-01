@@ -16,7 +16,7 @@ export class Invoices extends BaseEntity {
   series!: string;
 
   @Column()
-  number!: number;
+  number!: string;
 
   @Column({ type: "date" })
   date!: Date;
@@ -24,7 +24,7 @@ export class Invoices extends BaseEntity {
   @Column()
   type!: string;
 
-  @Column()
+  @Column({ length: 10 })
   currencyType!: string;
 
   @Column({ type: "float" })
