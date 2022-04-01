@@ -4,8 +4,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Payments } from "./Payments.entity";
 import { Study_Fields } from "./Study_Fields.entity";
 
 @Entity()
@@ -111,4 +113,7 @@ export class Students extends BaseEntity {
   })
   @JoinColumn()
   studyField!: Study_Fields;
+
+  @OneToMany(() => Payments, (Payments) => Payments.student)
+  payments!: Payments[];
 }

@@ -3,8 +3,10 @@ import {
   Column,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Payments } from "./Payments.entity";
 
 @Entity()
 export class Discounts extends BaseEntity {
@@ -25,4 +27,7 @@ export class Discounts extends BaseEntity {
 
   @Column()
   status!: string;
+
+  @OneToMany(() => Payments, (Payments) => Payments.discount)
+  payments!: Payments[];
 }
