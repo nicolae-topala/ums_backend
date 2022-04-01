@@ -14,8 +14,8 @@ export class Student_Courses extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  final_grade!: number;
+  @Column({ type: "float" })
+  finalGrade!: number;
 
   @ManyToOne(() => Students, (Students: Students) => Students.studentCourses, {
     onDelete: "CASCADE",

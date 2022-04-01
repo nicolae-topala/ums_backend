@@ -19,9 +19,9 @@ export class Professors extends BaseEntity {
   firstName!: string;
 
   @Column()
-  LastName!: string;
+  lastName!: string;
 
-  @Column()
+  @Column({ type: "date" })
   birthdate!: Date;
 
   @Column()

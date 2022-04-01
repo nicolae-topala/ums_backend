@@ -2,7 +2,7 @@ import {
   BaseEntity,
   Column,
   Entity,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Payments } from "./Payments.entity";
@@ -16,9 +16,9 @@ export class Invoices extends BaseEntity {
   series!: string;
 
   @Column()
-  number!: string;
+  number!: number;
 
-  @Column()
+  @Column({ type: "date" })
   date!: Date;
 
   @Column()
@@ -27,9 +27,9 @@ export class Invoices extends BaseEntity {
   @Column()
   currencyType!: string;
 
-  @Column()
+  @Column({ type: "float" })
   ammount!: number;
 
-  @OneToOne(() => Payments, (Payments: Payments) => Payments.invoice)
-  payments!: Payments;
+  @OneToMany(() => Payments, (Payments: Payments) => Payments.invoice)
+  payments!: Payments[];
 }

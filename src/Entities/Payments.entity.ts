@@ -4,7 +4,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Courses } from "./Courses.entity";
@@ -17,10 +16,10 @@ export class Payments extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ type: "float" })
   ammountPaid!: number;
 
-  @Column()
+  @Column({ type: "float" })
   penalty!: number;
 
   @Column()
@@ -32,8 +31,8 @@ export class Payments extends BaseEntity {
   @JoinColumn()
   discount!: Discounts;
 
-  @OneToOne(() => Invoices, (Invoices: Invoices) => Invoices.payments, {
-    onDelete: "CASCADE",
+  @ManyToOne(() => Invoices, (Invoices: Invoices) => Invoices.payments, {
+    onDelete: "SET NULL",
   })
   @JoinColumn()
   invoice!: Discounts;

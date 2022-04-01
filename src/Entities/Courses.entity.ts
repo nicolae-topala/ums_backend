@@ -31,7 +31,7 @@ export class Courses extends BaseEntity {
   category!: string;
 
   @Column()
-  grading_system!: string;
+  gradingSystem!: string;
 
   @ManyToOne(
     () => Study_Fields,

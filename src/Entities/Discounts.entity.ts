@@ -12,13 +12,13 @@ export class Discounts extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ type: "date" })
   date!: Date;
 
   @Column()
   taxType!: string;
 
-  @Column()
+  @Column({ type: "float" })
   discountsAmmount!: number;
 
   @Column()

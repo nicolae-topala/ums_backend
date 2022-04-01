@@ -22,7 +22,7 @@ export class Students extends BaseEntity {
   @Column()
   lastName!: string;
 
-  @Column()
+  @Column({ type: "date" })
   birtdate!: Date;
 
   @Column()
@@ -85,7 +85,7 @@ export class Students extends BaseEntity {
   @Column({ type: "year" })
   highschoolGraduation!: Date;
 
-  @Column()
+  @Column({ type: "float" })
   highschoolBaccalaureate!: number;
 
   @Column()
@@ -97,7 +97,7 @@ export class Students extends BaseEntity {
   @Column()
   group!: string;
 
-  @Column()
+  @Column({ type: "float" })
   admissionGrade!: number;
 
   @Column()
