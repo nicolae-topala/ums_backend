@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Faculties } from "./Faculties.entity";
 import { Payments } from "./Payments.entity";
+import { Student_Courses } from "./Student_Courses.entity";
 import { Study_Fields } from "./Study_Fields.entity";
 
 @Entity()
@@ -39,4 +40,7 @@ export class Courses extends BaseEntity {
 
   @OneToMany(() => Payments, (Payments) => Payments.course)
   payments!: Payments[];
+
+  @OneToMany(() => Student_Courses, (Student_Courses) => Student_Courses.course)
+  studentCourses!: Student_Courses[];
 }

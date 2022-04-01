@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Payments } from "./Payments.entity";
+import { Student_Courses } from "./Student_Courses.entity";
 import { Study_Fields } from "./Study_Fields.entity";
 
 @Entity()
@@ -116,4 +117,10 @@ export class Students extends BaseEntity {
 
   @OneToMany(() => Payments, (Payments) => Payments.student)
   payments!: Payments[];
+
+  @OneToMany(
+    () => Student_Courses,
+    (Student_Courses) => Student_Courses.student
+  )
+  studentCourses!: Student_Courses[];
 }
