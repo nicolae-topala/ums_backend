@@ -1,4 +1,5 @@
 import { Users } from "../Entities/Users.entity";
+import { omit } from "lodash";
 
 export async function changePassword({
   id,
@@ -12,4 +13,24 @@ export async function changePassword({
   } catch (e: any) {
     throw new Error(e);
   }
+}
+
+export async function validatePassword({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) {
+  const user = await Users.findOneBy({ username: username });
+
+  if (!user) {
+    return false;
+  }
+
+  const isValid = await Users.comparePassword(user.id, password);
+
+  if (!isValid) return false;
+
+  return omit(user, "password");
 }

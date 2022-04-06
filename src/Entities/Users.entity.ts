@@ -3,11 +3,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import bcrypt from "bcrypt";
+import config from "config";
 
+import { Sessions } from "./Sessions.entity";
 import { Students } from "./Students.entity";
 
 @Entity()
@@ -34,8 +37,11 @@ export class Users extends BaseEntity {
   @JoinColumn()
   student!: Students;
 
+  @OneToMany(() => Sessions, (Sessions: Sessions) => Sessions.user)
+  sessions!: Sessions[];
+
   static async changePassword(id: number, password: string) {
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
     const hash = await bcrypt.hashSync(password, salt);
     password = hash;
 
