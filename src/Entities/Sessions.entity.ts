@@ -9,7 +9,7 @@ import {
 
 import { Users } from "./Users.entity";
 
-export interface SessionsSchema {
+export interface SessionsDocument {
   id?: number;
   valid?: boolean;
   userId?: number;
@@ -61,5 +61,22 @@ export class Sessions extends BaseEntity {
     // The query above returns an array of jsons, we take the first one.
     // Because this insert will always return 1 object
     return session[0];
+  }
+
+  static async updateSession(
+    query: SessionsDocument,
+    update: SessionsDocument
+  ) {
+    const id = query.id;
+
+    if (id === undefined) {
+      return "No session ID specified!";
+    }
+
+    return await Sessions.createQueryBuilder()
+      .update(Sessions)
+      .set(update)
+      .where("id = :id", { id: id })
+      .execute();
   }
 }

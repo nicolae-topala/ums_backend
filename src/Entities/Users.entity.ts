@@ -45,7 +45,7 @@ export class Users extends BaseEntity {
     const hash = await bcrypt.hashSync(password, salt);
     password = hash;
 
-    return Users.createQueryBuilder()
+    return await Users.createQueryBuilder()
       .update(Users)
       .set({ password: password })
       .where("id = :id", { id: id })

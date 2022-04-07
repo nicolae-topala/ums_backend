@@ -1,4 +1,4 @@
-import { Sessions, SessionsSchema } from "../Entities/Sessions.entity";
+import { Sessions, SessionsDocument } from "../Entities/Sessions.entity";
 
 export async function createSession(userId: number, userAgent: string) {
   const session = await Sessions.createSession(userId, userAgent);
@@ -6,6 +6,13 @@ export async function createSession(userId: number, userAgent: string) {
   return session;
 }
 
-export async function findSessions(query: SessionsSchema) {
-  return Sessions.findOneBy(query);
+export async function findSessions(query: SessionsDocument) {
+  return await Sessions.findBy(query);
+}
+
+export async function updateSession(
+  query: SessionsDocument,
+  update: SessionsDocument
+) {
+  return await Sessions.updateSession(query, update);
 }

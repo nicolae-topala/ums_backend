@@ -9,6 +9,7 @@ import requireUser from "./Middleware/requireUser";
 import { changePasswordHandler } from "./controllers/users.controllers";
 import {
   createUserSessionHandler,
+  deleteSessionHandler,
   getUserSessionsHandler,
 } from "./controllers/sessions.controller";
 
@@ -34,6 +35,8 @@ function routes(app: Express) {
   );
 
   app.get("/api/sessions", requireUser, getUserSessionsHandler);
+
+  app.delete("/api/sessions", requireUser, deleteSessionHandler);
 }
 
 export default routes;

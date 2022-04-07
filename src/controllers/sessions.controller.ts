@@ -3,7 +3,11 @@ import { omit } from "lodash";
 import config from "config";
 
 import { signJwt } from "../utils/jwt.utils";
-import { createSession, findSessions } from "../service/session.service";
+import {
+  createSession,
+  findSessions,
+  updateSession,
+} from "../service/session.service";
 import { validatePassword } from "../service/user.service";
 
 export async function createUserSessionHandler(req: Request, res: Response) {
@@ -44,4 +48,15 @@ export async function getUserSessionsHandler(req: Request, res: Response) {
   const sessions = await findSessions({ userId: userId, valid: true });
 
   return res.send(sessions);
+}
+
+export async function deleteSessionHandler(req: Request, res: Response) {
+  const sessionId = res.locals.user.session;
+
+  await updateSession({ id: sessionId }, { valid: false });
+
+  return res.send({
+    accessToken: null,
+    refreshToken: null,
+  });
 }
