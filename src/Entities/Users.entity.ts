@@ -13,6 +13,15 @@ import config from "config";
 import { Sessions } from "./Sessions.entity";
 import { Students } from "./Students.entity";
 
+export interface UsersDocument {
+  id?: number;
+  username?: string;
+  password?: string;
+  email?: string;
+  status?: string;
+  createdAt?: Date;
+  studentId?: number;
+}
 @Entity()
 export class Users extends BaseEntity {
   @PrimaryGeneratedColumn()

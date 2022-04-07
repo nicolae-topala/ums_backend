@@ -1,4 +1,4 @@
-import { Users } from "../Entities/Users.entity";
+import { UsersDocument, Users } from "../Entities/Users.entity";
 import { omit } from "lodash";
 
 export async function changePassword({
@@ -33,4 +33,8 @@ export async function validatePassword({
   if (!isValid) return false;
 
   return omit(user, "password");
+}
+
+export async function findUser(query: UsersDocument) {
+  return Users.findOneBy(query);
 }
