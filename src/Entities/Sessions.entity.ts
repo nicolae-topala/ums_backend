@@ -9,6 +9,15 @@ import {
 
 import { Users } from "./Users.entity";
 
+export interface SessionsSchema {
+  id?: number;
+  valid?: boolean;
+  userId?: number;
+  userAgent?: string;
+  createdAt?: Date;
+  upatedAt?: Date;
+}
+
 @Entity()
 export class Sessions extends BaseEntity {
   @PrimaryGeneratedColumn()
