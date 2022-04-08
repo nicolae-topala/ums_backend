@@ -1,5 +1,7 @@
-import { UsersDocument, Users } from "../Entities/Users.entity";
 import { omit } from "lodash";
+
+// Entities
+import { UsersDocument, Users } from "../Entities/Users.entity";
 
 export async function changePassword({
   id,

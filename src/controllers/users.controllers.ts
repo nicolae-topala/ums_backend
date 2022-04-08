@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
+
+// Utils
 import logger from "../utils/logger";
 
+// Services
 import { changePassword } from "../service/user.service";
+
+// Schemas
 import { ChangePasswordInput } from "../Schema/users.schema";
 
 export async function changePasswordHandler(

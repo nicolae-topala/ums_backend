@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import { omit } from "lodash";
 import config from "config";
 
+// Utils
 import { signJwt } from "../utils/jwt.utils";
+
+// Services
 import {
   createSession,
   findSessions,

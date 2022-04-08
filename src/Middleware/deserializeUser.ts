@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { get } from "lodash";
-import { reIssueAccessToken } from "../service/session.service";
+
+// Utils
 import { verifyJwt } from "../utils/jwt.utils";
+
+// Services
+import { reIssueAccessToken } from "../service/session.service";
 
 const deserializeUser = async (
   req: Request,
