@@ -37,6 +37,7 @@ const deserializeUser = async (
 
     if (newAccessToken) {
       res.setHeader("x-access-token", newAccessToken);
+      res.cookie("accessToken", newAccessToken);
 
       const result = verifyJwt(newAccessToken);
       res.locals.user = result.decoded;

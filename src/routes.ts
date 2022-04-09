@@ -22,12 +22,14 @@ function routes(app: Express) {
     res.sendStatus(200);
   });
 
+  // Users
   app.patch(
     "/api/changePassword",
-    validateResource(changePasswordSchema),
+    [requireUser, validateResource(changePasswordSchema)],
     changePasswordHandler
   );
 
+  // Sessions
   app.post(
     "/api/sessions",
     validateResource(createSessionSchema),

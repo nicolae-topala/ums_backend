@@ -2,8 +2,8 @@ import { number, object, string, TypeOf } from "zod";
 
 export const changePasswordSchema = object({
   body: object({
-    id: number({
-      required_error: "ID is required",
+    oldPassword: string({
+      required_error: "Old password is required",
     }),
     password: string({
       required_error: "New password is required",
