@@ -42,6 +42,9 @@ export class Users extends BaseEntity {
   @Column({ type: "timestamp", nullable: true })
   createdAt!: Date;
 
+  @Column()
+  studentId!: number;
+
   @OneToOne(() => Students, { onDelete: "CASCADE", nullable: false })
   @JoinColumn()
   student!: Students;

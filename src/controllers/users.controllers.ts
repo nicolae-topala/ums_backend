@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import logger from "../utils/logger";
 
 // Services
-import { changeEmail, changePassword } from "../service/user.service";
+import { changeEmail, changePassword, getUser } from "../service/user.service";
 
 // Schemas
 import { ChangeEmailInput, ChangePasswordInput } from "../Schema/users.schema";
@@ -37,6 +37,18 @@ export async function changeEmailHandler(
     return res.send("Email changed successfully!");
   } catch (e: any) {
     logger.error(e);
+    return res.status(400).send(e.message);
+  }
+}
+
+export async function getUserHandler(req: Request, res: Response) {
+  try {
+    const userId = res.locals.user.id;
+
+    const data = await getUser({ id: userId });
+    if (!data) return res.status(404).send("User doesn't exist !");
+    return res.send(data);
+  } catch (e: any) {
     return res.status(400).send(e.message);
   }
 }

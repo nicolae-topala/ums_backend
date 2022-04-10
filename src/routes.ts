@@ -9,6 +9,7 @@ import requireUser from "./Middleware/requireUser";
 import {
   changeEmailHandler,
   changePasswordHandler,
+  getUserHandler,
 } from "./controllers/users.controllers";
 import {
   createUserSessionHandler,
@@ -26,14 +27,16 @@ function routes(app: Express) {
   });
 
   // Users
+  app.get("/api/users", requireUser, getUserHandler);
+
   app.patch(
-    "/api/changePassword",
+    "/api/users/changePassword",
     [requireUser, validateResource(changePasswordSchema)],
     changePasswordHandler
   );
 
   app.patch(
-    "/api/changeEmail",
+    "/api/users/changeEmail",
     [requireUser, validateResource(changeEmailSchema)],
     changeEmailHandler
   );

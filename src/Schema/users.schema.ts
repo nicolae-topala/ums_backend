@@ -29,4 +29,5 @@ export type ChangePasswordInput = Omit<
   z.infer<typeof changePasswordSchema>,
   "body.passwordConfirm"
 >;
+
 export type ChangeEmailInput = z.infer<typeof changeEmailSchema>;

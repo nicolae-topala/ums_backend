@@ -63,3 +63,9 @@ export async function changeEmail({
     throw new Error(e);
   }
 }
+
+export async function getUser({ id }: { id: number }) {
+  const user = await Users.findOneBy({ id: id });
+
+  return omit(user, "id", "password", "studentId");
+}
