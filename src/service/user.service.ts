@@ -13,6 +13,9 @@ export async function changePassword({
   password: string;
 }) {
   try {
+    const user = await findUser({ id: id });
+    if (!user) return false;
+
     const isValid = await Users.comparePassword(id, oldPassword);
     if (!isValid) return false;
 
@@ -42,4 +45,21 @@ export async function validatePassword({
 
 export async function findUser(query: UsersDocument) {
   return Users.findOneBy(query);
+}
+
+export async function changeEmail({
+  id,
+  email,
+}: {
+  id: number;
+  email: string;
+}) {
+  try {
+    const user = await findUser({ id: id });
+    if (!user) return false;
+
+    return await Users.changeEmail(id, email);
+  } catch (e: any) {
+    throw new Error(e);
+  }
 }

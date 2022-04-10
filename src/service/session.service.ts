@@ -34,15 +34,12 @@ export async function reIssueAccessToken({
 }) {
   const { decoded } = verifyJwt(refreshToken);
   const sessionId = get(decoded, "session.id");
-
   if (!decoded || !sessionId) return false;
 
   const session = await Sessions.findOneBy({ id: sessionId });
-
   if (!session || !session.valid) return false;
 
   const user = await findUser({ id: session.userId });
-
   if (!user) return false;
 
   // Create an access token

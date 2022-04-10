@@ -6,7 +6,10 @@ import validateResource from "./Middleware/validateResource";
 import requireUser from "./Middleware/requireUser";
 
 // Controllers
-import { changePasswordHandler } from "./controllers/users.controllers";
+import {
+  changeEmailHandler,
+  changePasswordHandler,
+} from "./controllers/users.controllers";
 import {
   createUserSessionHandler,
   deleteSessionHandler,
@@ -14,7 +17,7 @@ import {
 } from "./controllers/sessions.controller";
 
 // Schemas
-import { changePasswordSchema } from "./Schema/users.schema";
+import { changePasswordSchema, changeEmailSchema } from "./Schema/users.schema";
 import { createSessionSchema } from "./Schema/sessions.schema";
 
 function routes(app: Express) {
@@ -27,6 +30,12 @@ function routes(app: Express) {
     "/api/changePassword",
     [requireUser, validateResource(changePasswordSchema)],
     changePasswordHandler
+  );
+
+  app.patch(
+    "/api/changeEmail",
+    [requireUser, validateResource(changeEmailSchema)],
+    changeEmailHandler
   );
 
   // Sessions

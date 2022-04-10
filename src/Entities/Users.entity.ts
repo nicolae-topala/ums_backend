@@ -61,6 +61,14 @@ export class Users extends BaseEntity {
       .execute();
   }
 
+  static async changeEmail(id: number, email: string) {
+    return await Users.createQueryBuilder()
+      .update(Users)
+      .set({ email: email })
+      .where("id = :id", { id: id })
+      .execute();
+  }
+
   static async comparePassword(id: number, password: string): Promise<boolean> {
     const checkPassword = await Users.createQueryBuilder()
       .select(["password"])
