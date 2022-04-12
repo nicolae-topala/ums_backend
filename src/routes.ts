@@ -21,6 +21,7 @@ import {
 import { changePasswordSchema, changeEmailSchema } from "./Schema/users.schema";
 import { createSessionSchema } from "./Schema/sessions.schema";
 import { getStudentHandler } from "./controllers/students.controller";
+import { getCurriculumHandler } from "./controllers/courses.controller";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => {
@@ -55,6 +56,9 @@ function routes(app: Express) {
 
   // Students
   app.get("/api/students", requireUser, getStudentHandler);
+
+  // Courses
+  app.get("/api/curriculum", requireUser, getCurriculumHandler);
 }
 
 export default routes;

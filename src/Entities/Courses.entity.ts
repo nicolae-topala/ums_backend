@@ -37,6 +37,9 @@ export class Courses extends BaseEntity {
   semesterNumber!: number;
 
   @Column({ nullable: true })
+  yearNumber!: number;
+
+  @Column({ nullable: true })
   weeksNumber!: number;
 
   @Column({ nullable: true })
@@ -47,6 +50,9 @@ export class Courses extends BaseEntity {
 
   @Column({ nullable: true })
   minimumGrade!: number;
+
+  @Column()
+  studyFieldId!: number;
 
   @ManyToOne(
     () => Study_Fields,

@@ -12,9 +12,7 @@ const validate =
       });
       next();
     } catch (e: any) {
-      // Show only the message data of the issues[]
-      // e returns array of issues with data type which I don't want to share :)
-      return res.status(400).send(e.issues[0].message);
+      return res.status(400).send(e.issues.message);
     }
   };
 
