@@ -11,6 +11,40 @@ import { Payments } from "./Payments.entity";
 import { Student_Courses } from "./Student_Courses.entity";
 import { Study_Fields } from "./Study_Fields.entity";
 
+export interface StudentDocument {
+  firstName: string;
+  lastName: string;
+  birthdate: Date;
+  cnp: string;
+  firstNameMother: string;
+  firstNameFather: string;
+  passport: string;
+  idCard: string;
+  sex: string;
+  citizenship: string;
+  nationality: string;
+  countryBirth: string;
+  cityBirth: string;
+  countyBirth: string;
+  countryResidence: string;
+  cityResidence: string;
+  countyResidence: string;
+  religion: string;
+  minority: boolean;
+  maritalStatus: string;
+  militarySituation: boolean;
+  militaryBooklet: string;
+  highschoolGraduation: Date;
+  highschoolBaccalaureate: number;
+  highschoolOlympic: boolean;
+  group: string;
+  admissionGrade: number;
+  phone: string;
+  email: string;
+  academicYear: string;
+  studyField: string;
+}
+
 @Entity()
 export class Students extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -94,6 +128,9 @@ export class Students extends BaseEntity {
   @Column({ nullable: true })
   group!: string;
 
+  @Column({ nullable: true })
+  registrationNumber!: number;
+
   @Column({ type: "float", nullable: true })
   admissionGrade!: number;
 
@@ -105,6 +142,9 @@ export class Students extends BaseEntity {
 
   @Column({ nullable: true })
   academicYear!: string;
+
+  @Column()
+  studyFieldId!: number;
 
   @ManyToOne(
     () => Study_Fields,
@@ -125,4 +165,16 @@ export class Students extends BaseEntity {
     (Student_Courses: Student_Courses) => Student_Courses.student
   )
   studentCourses!: Student_Courses[];
+
+  static async findStudent(id: number): Promise<StudentDocument> {
+    const data = await Students.createQueryBuilder("students")
+      .select("students")
+      .addSelect("studyfields.name")
+      .innerJoin("students.studyField", "studyfields")
+      .where("students.id = :id", { id })
+      .andWhere("studyfields.id = students.studyFieldId")
+      .getRawOne();
+
+    return data;
+  }
 }

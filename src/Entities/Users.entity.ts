@@ -60,7 +60,7 @@ export class Users extends BaseEntity {
     return await Users.createQueryBuilder()
       .update(Users)
       .set({ password: password })
-      .where("id = :id", { id: id })
+      .where("id = :id", { id })
       .execute();
   }
 
@@ -68,14 +68,14 @@ export class Users extends BaseEntity {
     return await Users.createQueryBuilder()
       .update(Users)
       .set({ email: email })
-      .where("id = :id", { id: id })
+      .where("id = :id", { id })
       .execute();
   }
 
   static async comparePassword(id: number, password: string): Promise<boolean> {
     const checkPassword = await Users.createQueryBuilder()
       .select(["password"])
-      .where("id = :id", { id: id })
+      .where("id = :id", { id })
       .getRawOne();
 
     return await bcrypt

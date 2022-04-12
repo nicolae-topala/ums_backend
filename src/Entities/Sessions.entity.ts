@@ -76,7 +76,7 @@ export class Sessions extends BaseEntity {
     return await Sessions.createQueryBuilder()
       .update(Sessions)
       .set(update)
-      .where("id = :id", { id: id })
+      .where("id = :id", { id })
       .execute();
   }
 }
