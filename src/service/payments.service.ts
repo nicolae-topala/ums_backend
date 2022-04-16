@@ -14,6 +14,5 @@ export async function getDiscounts(id: number) {
   if (!student) return false;
 
   const data = await Payments.getDiscounts(id);
-  console.log(data);
   return data;
 }
