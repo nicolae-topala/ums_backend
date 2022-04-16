@@ -5,13 +5,13 @@ import { Students } from "../Entities/Students.entity";
 import { Courses } from "../Entities/Courses.entity";
 import { Student_Courses } from "../Entities/Student_Courses.entity";
 
-export async function getStudent({ id }: { id: number }) {
+export async function getStudent(id: number) {
   const student = await Students.findStudent(id);
 
   return omit(student, "students_id", "studyfields_id");
 }
 
-export async function getCurriculum({ id }: { id: number }) {
+export async function getCurriculum(id: number) {
   const student = await Students.findOneBy({ id: id });
   if (!student) return false;
 
@@ -19,7 +19,7 @@ export async function getCurriculum({ id }: { id: number }) {
   return courses;
 }
 
-export async function getGrades({ id }: { id: number }) {
+export async function getGrades(id: number) {
   const student = await Students.findOneBy({ id: id });
   if (!student) return false;
 

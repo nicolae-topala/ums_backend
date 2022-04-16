@@ -27,9 +27,6 @@ export class Invoices extends BaseEntity {
   @Column({ length: 10 })
   currencyType!: string;
 
-  @Column({ type: "float" })
-  ammount!: number;
-
   @OneToMany(() => Payments, (Payments: Payments) => Payments.invoice)
   payments!: Payments[];
 }

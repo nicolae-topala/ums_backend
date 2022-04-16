@@ -19,14 +19,22 @@ export class Payments extends BaseEntity {
   @Column({ type: "float" })
   ammountPaid!: number;
 
-  @Column({ type: "float", nullable: true })
-  penalty!: number;
-
   @Column({ nullable: true })
   status!: string;
 
+  @Column()
+  studentId!: number;
+  @ManyToOne(() => Students, (Students: Students) => Students.payments, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn()
+  student!: Students;
+
+  @Column()
+  discountId!: number;
   @ManyToOne(() => Discounts, (Discounts: Discounts) => Discounts.payments, {
-    onDelete: "SET NULL",
+    onDelete: "NO ACTION",
+    nullable: true,
   })
   @JoinColumn()
   discount!: Discounts;
@@ -44,9 +52,15 @@ export class Payments extends BaseEntity {
   @JoinColumn()
   course!: Courses;
 
-  @ManyToOne(() => Students, (Students: Students) => Students.payments, {
-    onDelete: "SET NULL",
-  })
-  @JoinColumn()
-  student!: Students;
+  static async getPayments(id: number) {
+    return await Payments.createQueryBuilder("payments")
+      .select("payments")
+      .addSelect("invoices")
+      .addSelect("courses.name")
+      .innerJoin("payments.student", "students")
+      .innerJoin("payments.invoice", "invoices")
+      .innerJoin("payments.course", "courses")
+      .where("students.id = :id", { id })
+      .getRawMany();
+  }
 }

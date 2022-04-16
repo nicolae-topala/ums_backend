@@ -20,6 +20,7 @@ import {
   getGradesHandler,
   getStudentHandler,
 } from "./controllers/students.controller";
+import { getPaymentsHandler } from "./controllers/payments.controller";
 
 // Schemas
 import { changePasswordSchema, changeEmailSchema } from "./Schema/users.schema";
@@ -61,7 +62,8 @@ function routes(app: Express) {
   app.get("/api/students/curriculum", requireUser, getCurriculumHandler);
   app.get("/api/students/grades", requireUser, getGradesHandler);
 
-  // Courses
+  // Payments
+  app.get("/api/payments", requireUser, getPaymentsHandler);
 }
 
 export default routes;
