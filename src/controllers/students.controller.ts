@@ -13,7 +13,7 @@ import {
 export async function getStudentHandler(req: Request, res: Response) {
   try {
     const studentId = res.locals.user.studentId;
-    const data = await getStudent({ id: studentId });
+    const data = await getStudent(studentId);
 
     if (!data) return res.status(404).send("No student found!");
     return res.send(data);
@@ -26,7 +26,7 @@ export async function getStudentHandler(req: Request, res: Response) {
 export async function getCurriculumHandler(req: Request, res: Response) {
   try {
     const studentId = res.locals.user.studentId;
-    const data = await getCurriculum({ id: studentId });
+    const data = await getCurriculum(studentId);
 
     if (!data) return res.status(404).send("Student not found !");
     return res.send(data);
@@ -39,7 +39,7 @@ export async function getCurriculumHandler(req: Request, res: Response) {
 export async function getGradesHandler(req: Request, res: Response) {
   try {
     const studentId = res.locals.user.studentId;
-    const data = await getGrades({ id: studentId });
+    const data = await getGrades(studentId);
 
     if (!data)
       return res

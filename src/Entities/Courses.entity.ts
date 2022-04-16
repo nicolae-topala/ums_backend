@@ -58,7 +58,8 @@ export class Courses extends BaseEntity {
     () => Study_Fields,
     (Study_Fields: Study_Fields) => Study_Fields.courses,
     {
-      onDelete: "SET NULL",
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
       nullable: true,
     }
   )

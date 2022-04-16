@@ -45,7 +45,7 @@ export async function getUserHandler(req: Request, res: Response) {
   try {
     const userId = res.locals.user.id;
 
-    const data = await getUser({ id: userId });
+    const data = await getUser(userId);
     if (!data) return res.status(404).send("User doesn't exist !");
     return res.send(data);
   } catch (e: any) {

@@ -31,13 +31,13 @@ export class Student_Courses extends BaseEntity {
   student!: Students;
 
   @ManyToOne(() => Courses, (Courses: Courses) => Courses.studentCourses, {
-    onDelete: "SET NULL",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
   })
   @JoinColumn()
   course!: Courses;
 
   static async getStudentGrades(id: number) {
-    console.log("The ID ", id);
     return await Student_Courses.createQueryBuilder("student_courses")
       .select("finalGrade")
       .addSelect("courses")
