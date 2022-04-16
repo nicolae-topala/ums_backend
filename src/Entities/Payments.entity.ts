@@ -63,4 +63,13 @@ export class Payments extends BaseEntity {
       .where("students.id = :id", { id })
       .getRawMany();
   }
+
+  static async getDiscounts(id: number) {
+    return await Payments.createQueryBuilder("payments")
+      .select("discounts")
+      .innerJoin("payments.discount", "discounts")
+      .innerJoin("payments.student", "students")
+      .where("students.id = :id", { id })
+      .getRawMany();
+  }
 }

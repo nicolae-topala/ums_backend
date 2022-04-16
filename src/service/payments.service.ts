@@ -8,3 +8,12 @@ export async function getPayments(id: number) {
   const data = await Payments.getPayments(id);
   return data;
 }
+
+export async function getDiscounts(id: number) {
+  const student = await Students.findOneBy({ id: id });
+  if (!student) return false;
+
+  const data = await Payments.getDiscounts(id);
+  console.log(data);
+  return data;
+}
