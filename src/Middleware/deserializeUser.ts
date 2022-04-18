@@ -6,7 +6,6 @@ import { verifyJwt } from "../utils/jwt.utils";
 
 // Services
 import { reIssueAccessToken, verifyValidity } from "../service/session.service";
-import { JwtPayload } from "jsonwebtoken";
 
 const deserializeUser = async (
   req: Request,

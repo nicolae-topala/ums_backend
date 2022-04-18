@@ -41,6 +41,15 @@ import { object, string, z } from "zod";
  *        email:
  *          type: string
  *          default: test
+ *
+ *    forgotPasswordInput:
+ *      type: object
+ *      required:
+ *        - username
+ *      properties:
+ *        username:
+ *          type: string
+ *          default: test
  */
 
 export const changePasswordSchema = object({
@@ -65,6 +74,14 @@ export const changeEmailSchema = object({
     email: string({
       required_error: "New email is required!",
     }).email("Not a valid email"),
+  }),
+});
+
+export const forgotPasswordSchema = object({
+  body: object({
+    username: string({
+      required_error: "Username is required!",
+    }),
   }),
 });
 

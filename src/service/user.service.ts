@@ -69,3 +69,7 @@ export async function getUser(id: number) {
 
   return omit(user, "id", "password", "studentId");
 }
+
+export async function createToken(id: number, token: string) {
+  return await Users.createToken(id, token);
+}

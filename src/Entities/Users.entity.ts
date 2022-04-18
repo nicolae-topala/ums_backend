@@ -39,6 +39,9 @@ export class Users extends BaseEntity {
   @Column({ nullable: true })
   status!: string;
 
+  @Column({ nullable: true })
+  token!: string;
+
   @Column({ type: "timestamp", nullable: true })
   createdAt!: Date;
 
@@ -64,14 +67,6 @@ export class Users extends BaseEntity {
       .execute();
   }
 
-  static async changeEmail(id: number, email: string) {
-    return await Users.createQueryBuilder()
-      .update(Users)
-      .set({ email: email })
-      .where("id = :id", { id })
-      .execute();
-  }
-
   static async comparePassword(id: number, password: string): Promise<boolean> {
     const checkPassword = await Users.createQueryBuilder()
       .select(["password"])
@@ -81,5 +76,24 @@ export class Users extends BaseEntity {
     return await bcrypt
       .compare(password, checkPassword["password"])
       .catch((e) => false);
+  }
+
+  static async changeEmail(id: number, email: string) {
+    return await Users.createQueryBuilder()
+      .update(Users)
+      .set({ email: email })
+      .where("id = :id", { id })
+      .execute();
+  }
+
+  static async createToken(id: number, token: string) {
+    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+    const hash = await bcrypt.hashSync(token, salt);
+
+    return await Users.createQueryBuilder()
+      .update(Users)
+      .set({ token: hash, createdAt: new Date().toISOString() })
+      .where("id = :id", { id })
+      .execute();
   }
 }

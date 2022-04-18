@@ -4,7 +4,13 @@ import { Request, Response } from "express";
 import logger from "../utils/logger";
 
 // Services
-import { changeEmail, changePassword, getUser } from "../service/user.service";
+import {
+  changeEmail,
+  changePassword,
+  findUser,
+  getUser,
+  createToken,
+} from "../service/user.service";
 
 // Schemas
 import { ChangeEmailInput, ChangePasswordInput } from "../Schema/users.schema";
@@ -50,6 +56,22 @@ export async function getUserHandler(req: Request, res: Response) {
     return res.send(data);
   } catch (e: any) {
     logger.error(e);
+    return res.status(400).send(e.issues.message);
+  }
+}
+
+export async function forgotPasswordHandler(req: Request, res: Response) {
+  try {
+    const user = await findUser({ username: req.body.username });
+
+    if (!user)
+      return res.status(404).send("There is no user with such username!");
+
+    // Create random substring, we use 2,13 to create 11 long string. first 2 characters are 0. , so we don't substract them
+    const token = Math.random().toString(36).substring(2, 13);
+    const createTokens = await createToken(user.id, token);
+    return res.send(createTokens);
+  } catch (e: any) {
     return res.status(400).send(e.issues.message);
   }
 }

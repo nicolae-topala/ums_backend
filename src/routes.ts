@@ -8,6 +8,7 @@ import validateResource from "./Middleware/validateResource";
 import {
   changeEmailHandler,
   changePasswordHandler,
+  forgotPasswordHandler,
   getUserHandler,
 } from "./controllers/users.controller";
 import {
@@ -26,7 +27,11 @@ import {
 } from "./controllers/payments.controller";
 
 // Schemas
-import { changePasswordSchema, changeEmailSchema } from "./Schema/users.schema";
+import {
+  changePasswordSchema,
+  changeEmailSchema,
+  forgotPasswordSchema,
+} from "./Schema/users.schema";
 import { createSessionSchema } from "./Schema/sessions.schema";
 
 function routes(app: Express) {
@@ -190,6 +195,30 @@ function routes(app: Express) {
     "/api/users/changeEmail",
     [requireUser, validateResource(changeEmailSchema)],
     changeEmailHandler
+  );
+
+  /**
+   * @openapi
+   * /api/users/forgotPassword:
+   *  patch:
+   *    tags:
+   *      - Users
+   *    summary: Forgot password
+   *    description: Send a email to user to change password
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            $ref: '#/components/schemas/forgotPasswordInput'
+   *    responses:
+   *      200:
+   *        description: Success
+   */
+  app.patch(
+    "/api/users/forgotPassword",
+    validateResource(forgotPasswordSchema),
+    forgotPasswordHandler
   );
 
   // Students

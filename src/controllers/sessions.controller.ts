@@ -26,7 +26,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   // Create an access token
   const accessToken = signJwt(
     {
-      ...omit(user, "username", "email", "status", "createdAt"),
+      ...omit(user, "username", "email", "status", "createdAt", "token"),
       session: session.id,
     },
     { expiresIn: config.get<string>("accessTokenTtl") }
@@ -35,7 +35,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   // Create a refresh token
   const refreshToken = signJwt(
     {
-      ...omit(user, "username", "email", "status", "createdAt"),
+      ...omit(user, "username", "email", "status", "createdAt", "token"),
       session: session.id,
     },
     { expiresIn: config.get<string>("refreshTokenTtl") }
