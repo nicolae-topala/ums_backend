@@ -6,6 +6,7 @@ import routes from "./routes";
 // Utils
 import connect from "./utils/connect";
 import logger from "./utils/logger";
+import swaggerDocs from "./utils/swagger";
 
 // Middleware
 import deserializeUser from "./Middleware/deserializeUser";
@@ -22,6 +23,7 @@ const main = async () => {
   });
 
   routes(app);
+  swaggerDocs(app, 3001);
 };
 
 main().catch((err) => {

@@ -1,4 +1,47 @@
 import { object, string, z } from "zod";
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    User:
+ *      type: object
+ *      properties:
+ *        username:
+ *          type: string
+ *        email:
+ *          type: string
+ *        status:
+ *          type: string
+ *        createdAt:
+ *          type: string
+ *          format: date-time
+ *
+ *    changePasswordInput:
+ *      type: object
+ *      required:
+ *        - oldPassword
+ *        - password
+ *        - passwordConfirm
+ *      properties:
+ *        oldPassword:
+ *          type: string
+ *          default: test
+ *        password:
+ *          type: string
+ *          default: test
+ *        passwordConfirm:
+ *          type: string
+ *          default: test
+ *
+ *    changeEmailInput:
+ *      type: object
+ *      required:
+ *        - email
+ *      properties:
+ *        email:
+ *          type: string
+ *          default: test
+ */
 
 export const changePasswordSchema = object({
   body: object({
