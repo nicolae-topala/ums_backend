@@ -5,7 +5,8 @@ import { get } from "lodash";
 import { verifyJwt } from "../utils/jwt.utils";
 
 // Services
-import { reIssueAccessToken } from "../service/session.service";
+import { reIssueAccessToken, verifyValidity } from "../service/session.service";
+import { JwtPayload } from "jsonwebtoken";
 
 const deserializeUser = async (
   req: Request,
@@ -25,12 +26,7 @@ const deserializeUser = async (
     return next();
   }
 
-  const { decoded, expired } = verifyJwt(accessToken);
-
-  if (decoded) {
-    res.locals.user = decoded;
-    return next();
-  }
+  const { decoded, expired, valid } = await verifyJwt(accessToken);
 
   if (expired && refreshToken) {
     const newAccessToken = await reIssueAccessToken({ refreshToken });
@@ -39,9 +35,19 @@ const deserializeUser = async (
       res.setHeader("x-access-token", newAccessToken);
       res.cookie("accessToken", newAccessToken);
 
-      const result = verifyJwt(newAccessToken);
+      const result = await verifyJwt(newAccessToken);
       res.locals.user = result.decoded;
+      return next();
     }
+  }
+
+  if (valid != true) {
+    return next();
+  }
+
+  if (decoded) {
+    res.locals.user = decoded;
+    return next();
   }
 
   return next();

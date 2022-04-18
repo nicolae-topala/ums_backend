@@ -20,6 +20,11 @@ export async function findSessions(query: SessionsDocument) {
   return await Sessions.findBy(query);
 }
 
+export async function verifyValidity(id: number) {
+  const data = await Sessions.findValid(id);
+  return data;
+}
+
 export async function updateSession(
   query: SessionsDocument,
   update: SessionsDocument
@@ -32,8 +37,9 @@ export async function reIssueAccessToken({
 }: {
   refreshToken: string;
 }) {
-  const { decoded } = verifyJwt(refreshToken);
-  const sessionId = get(decoded, "session.id");
+  const { decoded } = await verifyJwt(refreshToken);
+  const sessionId = get(decoded, "session");
+
   if (!decoded || !sessionId) return false;
 
   const session = await Sessions.findOneBy({ id: sessionId });

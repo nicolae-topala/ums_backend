@@ -79,4 +79,11 @@ export class Sessions extends BaseEntity {
       .where("id = :id", { id })
       .execute();
   }
+
+  static async findValid(id: number) {
+    return await Sessions.createQueryBuilder()
+      .select("valid")
+      .where("id = :id", { id })
+      .getRawOne();
+  }
 }
