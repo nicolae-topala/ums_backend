@@ -19,6 +19,7 @@ export interface UsersDocument {
   password?: string;
   email?: string;
   status?: string;
+  token?: string;
   createdAt?: Date;
   studentId?: number;
 }
@@ -93,6 +94,14 @@ export class Users extends BaseEntity {
     return await Users.createQueryBuilder()
       .update(Users)
       .set({ token: hash, createdAt: new Date().toISOString() })
+      .where("id = :id", { id })
+      .execute();
+  }
+
+  static async setNullToken(id: number) {
+    return await Users.createQueryBuilder()
+      .update(Users)
+      .set({ token: undefined })
       .where("id = :id", { id })
       .execute();
   }

@@ -10,6 +10,7 @@ import {
   changePasswordHandler,
   forgotPasswordHandler,
   getUserHandler,
+  resetPasswordHandler,
 } from "./controllers/users.controller";
 import {
   createUserSessionHandler,
@@ -31,6 +32,7 @@ import {
   changePasswordSchema,
   changeEmailSchema,
   forgotPasswordSchema,
+  resetPasswordSchema,
 } from "./Schema/users.schema";
 import { createSessionSchema } from "./Schema/sessions.schema";
 
@@ -219,6 +221,30 @@ function routes(app: Express) {
     "/api/users/forgotPassword",
     validateResource(forgotPasswordSchema),
     forgotPasswordHandler
+  );
+
+  /**
+   * @openapi
+   * /api/users/resetPassword:
+   *  patch:
+   *    tags:
+   *      - Users
+   *    summary: Reset password
+   *    description: Reset user's password with token
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            $ref: '#/components/schemas/resetPasswordInput'
+   *    responses:
+   *      200:
+   *        description: Success
+   */
+  app.patch(
+    "/api/users/resetPassword",
+    validateResource(resetPasswordSchema),
+    resetPasswordHandler
   );
 
   // Students

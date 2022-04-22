@@ -73,3 +73,11 @@ export async function getUser(id: number) {
 export async function createToken(id: number, token: string) {
   return await Users.createToken(id, token);
 }
+
+export async function resetPassword(id: number, password: string) {
+  return await Users.changePassword(id, password);
+}
+
+export async function setNullToken(id: number) {
+  return await Users.setNullToken(id);
+}

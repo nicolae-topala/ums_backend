@@ -50,6 +50,24 @@ import { object, string, z } from "zod";
  *        username:
  *          type: string
  *          default: test
+ *
+ *    resetPasswordInput:
+ *      type: object
+ *      required:
+ *        - token
+ *        - password
+ *        - passwordConfirm
+ *      properties:
+ *        token:
+ *          type: string
+ *          default: token
+ *        password:
+ *          type: string
+ *          default: test
+ *        passwordConfirm:
+ *          type: string
+ *          default: test
+ *
  */
 
 export const changePasswordSchema = object({
@@ -85,9 +103,33 @@ export const forgotPasswordSchema = object({
   }),
 });
 
+export const resetPasswordSchema = object({
+  body: object({
+    token: string({
+      required_error: "Token is required!",
+    }),
+    password: string({
+      required_error: "New password is required!",
+    }).min(4, "Password too short, it must be 4 characters long!"),
+    passwordConfirm: string({
+      required_error: "Confirmation password is required!",
+    }),
+  }).refine((data) => data.password === data.passwordConfirm, {
+    message: "Passwords do not match!",
+    path: ["passwordConfirm"],
+  }),
+});
+
 export type ChangePasswordInput = Omit<
   z.infer<typeof changePasswordSchema>,
   "body.passwordConfirm"
 >;
 
 export type ChangeEmailInput = z.infer<typeof changeEmailSchema>;
+
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+
+export type ResetPasswordInput = Omit<
+  z.infer<typeof resetPasswordSchema>,
+  "body.passwordConfirm"
+>;
