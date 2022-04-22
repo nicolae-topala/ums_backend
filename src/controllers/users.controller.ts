@@ -21,6 +21,10 @@ import {
   ForgotPasswordInput,
   ResetPasswordInput,
 } from "../Schema/users.schema";
+import { createSession } from "../service/session.service";
+import { signJwt } from "../utils/jwt.utils";
+import { omit } from "lodash";
+import config from "config";
 
 export async function changePasswordHandler(
   req: Request<{}, {}, ChangePasswordInput["body"]>,
@@ -84,8 +88,8 @@ export async function forgotPasswordHandler(
         .status(429)
         .send(
           "You need to wait " +
-            (time / 1000 / 60).toFixed(2) +
-            " minutes to create a new token!"
+            (time / 1000).toFixed() +
+            " seconds to create a new token!"
         );
 
     // Create random substring, we use 2,13 to create 11 long string. first 2 characters are 0. , so we don't substract them
@@ -112,7 +116,30 @@ export async function resetPasswordHandler(
 
     const data = await resetPassword(user.id, req.body.password);
     if (data) await setNullToken(user.id);
-    return res.send(data);
+
+    // Create a session
+    const session = await createSession(user.id, req.get("user-agent") || "");
+
+    // Create an access token
+    const accessToken = signJwt(
+      {
+        ...omit(user, "username", "email", "status", "createdAt", "token"),
+        session: session.id,
+      },
+      { expiresIn: config.get<string>("accessTokenTtl") }
+    );
+
+    // Create a refresh token
+    const refreshToken = signJwt(
+      {
+        ...omit(user, "username", "email", "status", "createdAt", "token"),
+        session: session.id,
+      },
+      { expiresIn: config.get<string>("refreshTokenTtl") }
+    );
+
+    // Return access & refresh tokens
+    return res.send({ accessToken, refreshToken });
   } catch (e: any) {
     return res.status(400).send(e.issues.message);
   }
