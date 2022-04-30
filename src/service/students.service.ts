@@ -24,5 +24,6 @@ export async function getGrades(id: number) {
   if (!student) return false;
 
   const grades = await Student_Courses.getStudentGrades(id);
+  if (!grades) return false;
   return grades;
 }

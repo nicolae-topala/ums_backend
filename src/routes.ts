@@ -20,6 +20,7 @@ import {
 import {
   getCurriculumHandler,
   getGradesHandler,
+  getGradeSheetHandler,
   getStudentHandler,
 } from "./controllers/students.controller";
 import {
@@ -308,6 +309,27 @@ function routes(app: Express) {
    *              $ref: '#/components/schemas/Grades'
    */
   app.get("/api/students/grades", requireUser, getGradesHandler);
+
+  /**
+   * @openapi
+   * /api/students/grade-sheet:
+   *  get:
+   *    security:
+   *     - bearerAuth: []
+   *    tags:
+   *      - Students
+   *    summary: Grade Sheet
+   *    description: Download Grade Sheet as pdf
+   *    responses:
+   *      200:
+   *        description: Success
+   *        content:
+   *           application/pdf:
+   *            schema:
+   *              type: string
+   *              format: binary
+   */
+  app.get("/api/students/grade-sheet", requireUser, getGradeSheetHandler);
 
   // Payments
 
