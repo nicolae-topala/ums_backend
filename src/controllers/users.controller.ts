@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
+import { omit } from "lodash";
+import config from "config";
 
 // Utils
 import logger from "../utils/logger";
+import { sendResetPassword } from "../utils/smtp.utils";
+import { signJwt } from "../utils/jwt.utils";
 
 // Services
 import {
@@ -13,6 +17,7 @@ import {
   resetPassword,
   setNullToken,
 } from "../service/user.service";
+import { createSession } from "../service/session.service";
 
 // Schemas
 import {
@@ -21,10 +26,6 @@ import {
   ForgotPasswordInput,
   ResetPasswordInput,
 } from "../Schema/users.schema";
-import { createSession } from "../service/session.service";
-import { signJwt } from "../utils/jwt.utils";
-import { omit } from "lodash";
-import config from "config";
 
 export async function changePasswordHandler(
   req: Request<{}, {}, ChangePasswordInput["body"]>,
@@ -95,7 +96,15 @@ export async function forgotPasswordHandler(
     // Create random substring, we use 2,13 to create 11 long string. first 2 characters are 0. , so we don't substract them
     const token = Math.random().toString(36).substring(2, 13);
     const createTokens = await createToken(user.id, token);
-    return res.send(createTokens);
+    if (!createTokens) {
+      return res.send("Could not create token!");
+    }
+
+    const sent = await sendResetPassword(user.email, createTokens);
+    if (!sent) {
+      res.send("Failed to send a token to your email!");
+    }
+    return res.send("Successfully send a token to your email!");
   } catch (e: any) {
     return res.status(400).send(e.issues.message);
   }

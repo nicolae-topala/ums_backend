@@ -4,6 +4,7 @@ import { omit } from "lodash";
 
 // Entities
 import { UsersDocument, Users } from "../Entities/Users.entity";
+import logger from "../utils/logger";
 
 export async function changePassword({
   id,
@@ -89,10 +90,15 @@ export async function getUser(id: number) {
 }
 
 export async function createToken(id: number, token: string) {
-  const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
-  const hash = await bcrypt.hashSync(token, salt);
+  try {
+    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+    const hash = await bcrypt.hashSync(token, salt);
 
-  return await Users.createToken(id, hash);
+    await Users.createToken(id, hash);
+    return hash;
+  } catch (e: any) {
+    logger.error(e);
+  }
 }
 
 export async function resetPassword(id: number, password: string) {
