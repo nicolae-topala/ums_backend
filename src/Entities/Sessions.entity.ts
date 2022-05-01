@@ -63,16 +63,7 @@ export class Sessions extends BaseEntity {
     return session[0];
   }
 
-  static async updateSession(
-    query: SessionsDocument,
-    update: SessionsDocument
-  ) {
-    const id = query.id;
-
-    if (id === undefined) {
-      return "No session ID specified!";
-    }
-
+  static async updateSession(id: number, update: SessionsDocument) {
     return await Sessions.createQueryBuilder()
       .update(Sessions)
       .set(update)

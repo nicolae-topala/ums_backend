@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+import config from "config";
 import { omit } from "lodash";
 
 // Entities
@@ -14,12 +16,21 @@ export async function changePassword({
 }) {
   try {
     const user = await findUser({ id: id });
-    if (!user) return false;
+    if (!user) {
+      return false;
+    }
 
-    const isValid = await Users.comparePassword(id, oldPassword);
-    if (!isValid) return false;
+    const userData = await Users.comparePassword(id);
+    const isValid = await bcrypt
+      .compare(oldPassword, userData["password"])
+      .catch((e) => false);
+    if (!isValid) {
+      return false;
+    }
 
-    return await Users.changePassword(id, password);
+    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+    const hash = await bcrypt.hashSync(password, salt);
+    return await Users.changePassword(id, hash);
   } catch (e: any) {
     throw new Error(e);
   }
@@ -37,8 +48,13 @@ export async function validatePassword({
     return false;
   }
 
-  const isValid = await Users.comparePassword(user.id, password);
-  if (!isValid) return false;
+  const userData = await Users.comparePassword(user.id);
+  const isValid = await bcrypt
+    .compare(password, userData["password"])
+    .catch((e) => false);
+  if (!isValid) {
+    return false;
+  }
 
   return omit(user, "password");
 }
@@ -56,7 +72,9 @@ export async function changeEmail({
 }) {
   try {
     const user = await findUser({ id: id });
-    if (!user) return false;
+    if (!user) {
+      return false;
+    }
 
     return await Users.changeEmail(id, email);
   } catch (e: any) {
@@ -71,7 +89,10 @@ export async function getUser(id: number) {
 }
 
 export async function createToken(id: number, token: string) {
-  return await Users.createToken(id, token);
+  const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+  const hash = await bcrypt.hashSync(token, salt);
+
+  return await Users.createToken(id, hash);
 }
 
 export async function resetPassword(id: number, password: string) {

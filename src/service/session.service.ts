@@ -29,7 +29,12 @@ export async function updateSession(
   query: SessionsDocument,
   update: SessionsDocument
 ) {
-  return await Sessions.updateSession(query, update);
+  const id = query.id;
+  if (id === undefined) {
+    return "No session ID specified!";
+  }
+
+  return await Sessions.updateSession(id, update);
 }
 
 export async function reIssueAccessToken({

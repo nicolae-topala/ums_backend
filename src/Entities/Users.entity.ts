@@ -7,8 +7,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import bcrypt from "bcrypt";
-import config from "config";
 
 import { Sessions } from "./Sessions.entity";
 import { Students } from "./Students.entity";
@@ -57,10 +55,6 @@ export class Users extends BaseEntity {
   sessions!: Sessions[];
 
   static async changePassword(id: number, password: string) {
-    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
-    const hash = await bcrypt.hashSync(password, salt);
-    password = hash;
-
     return await Users.createQueryBuilder()
       .update(Users)
       .set({ password: password })
@@ -68,15 +62,11 @@ export class Users extends BaseEntity {
       .execute();
   }
 
-  static async comparePassword(id: number, password: string): Promise<boolean> {
-    const checkPassword = await Users.createQueryBuilder()
-      .select(["password"])
+  static async comparePassword(id: number) {
+    return await Users.createQueryBuilder()
+      .select("password")
       .where("id = :id", { id })
       .getRawOne();
-
-    return await bcrypt
-      .compare(password, checkPassword["password"])
-      .catch((e) => false);
   }
 
   static async changeEmail(id: number, email: string) {
@@ -88,12 +78,9 @@ export class Users extends BaseEntity {
   }
 
   static async createToken(id: number, token: string) {
-    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
-    const hash = await bcrypt.hashSync(token, salt);
-
     return await Users.createQueryBuilder()
       .update(Users)
-      .set({ token: hash, createdAt: new Date().toISOString() })
+      .set({ token: token, createdAt: new Date().toISOString() })
       .where("id = :id", { id })
       .execute();
   }
