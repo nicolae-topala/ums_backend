@@ -24,7 +24,7 @@ export function createGradeSheet(
 
 function generateHeader(doc: PDFKit.PDFDocument) {
   doc
-    .image("src/utils/resources/logo.png", 50, 40, { width: 150 })
+    .image("src/resources/logo.png", 50, 40, { width: 150 })
     .fillColor("#444444")
     .fontSize(20)
     .text("Fisa Matricola", 250, 100)
