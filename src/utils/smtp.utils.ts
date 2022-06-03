@@ -1,12 +1,13 @@
 import nodemailer from "nodemailer";
+import config from "config";
 import logger from "./logger";
 
 const smtpTransport = nodemailer.createTransport({
-  host: "smtp-relay.sendinblue.com",
-  port: 587,
+  host: config.get<string>("smtpHost"),
+  port: config.get<number>("smtpPort"),
   auth: {
-    user: "proawp5415@gmail.com",
-    pass: "xsmtpsib-0e2a9868b088e909e5543bce03536286b5bd9e6914c0e75f9dca1350ed15c03b-8H5pNBDJYmSgxy7r",
+    user: config.get<string>("smtpUser"),
+    pass: config.get<string>("smtpPass"),
   },
 });
 

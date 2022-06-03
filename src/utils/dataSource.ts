@@ -1,4 +1,9 @@
 import { DataSource } from "typeorm";
+
+// Import dotenv here for creating migrations,
+// because yarn generate uses only this file
+import dotenv from "dotenv";
+dotenv.config();
 import config from "config";
 
 const myDataSource = new DataSource({

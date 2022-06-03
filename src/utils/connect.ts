@@ -1,11 +1,10 @@
-import config from "config";
-
 import myDataSource from "./dataSource";
 import logger from "./logger";
 
 async function connect() {
   try {
     await myDataSource.initialize().then(async (connection) => {
+      console.log("connection");
       await connection.runMigrations();
     });
 
